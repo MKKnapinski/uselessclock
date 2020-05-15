@@ -15,7 +15,7 @@ export class ClockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUselessTime(this.randomIntFromInterval(3, 3));
+    this.getUselessTime(this.randomIntFromInterval(4, 4));
   }
 
 
@@ -29,6 +29,9 @@ export class ClockComponent implements OnInit {
         break;
       case 3:
         this.getRandomPastInfo();
+        break;
+      case 4:
+        this.getUntilEndOfYear();
         break;
     }
   }
@@ -53,6 +56,19 @@ export class ClockComponent implements OnInit {
       .subtract(intoThePast, 'minutes')
       .format('hh:mm:ss A');
     this.uselessTime = _.join([intoThePast, 'minutes ago was', pastTime], ' ');
+  }
+
+  private getUntilEndOfYear() {
+    const christmas = new Date().getFullYear() + '-12-24 00:00:00';
+
+    const ms = moment(christmas, 'YYYY-MM-DD HH:mm:ss').diff(moment(new Date(), 'YYYY-MM-DD HH:mm:ss'));
+    const duration = moment.duration(ms);
+    this.uselessTime = _.join([
+      Math.floor(duration.asHours()), 'hours and',
+      moment.utc(ms).format('mm'), 'minutes',
+      'until christmas eve!'
+    ], ' ');
+
   }
 
 }
