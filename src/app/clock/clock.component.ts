@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import {ImportantEvent} from '../common/important-event';
 
 @Component({
   selector: 'app-clock',
@@ -31,7 +32,7 @@ export class ClockComponent implements OnInit {
         this.getRandomPastInfo();
         break;
       case 4:
-        this.getUntilEndOfYear();
+        this.getTimeFromEvent();
         break;
     }
   }
@@ -58,17 +59,32 @@ export class ClockComponent implements OnInit {
     this.uselessTime = _.join([intoThePast, 'minutes ago was', pastTime], ' ');
   }
 
-  private getUntilEndOfYear() {
-    const christmas = new Date().getFullYear() + '-12-24 00:00:00';
+  getTimeFromEvent() {
+    const events = [
+      new ImportantEvent('Christmas Eve', new Date().getFullYear() + '-12-24 00:00:00'),
+      new ImportantEvent('Polish independence day', new Date().getFullYear() + '-11-11 00:00:00'),
+      new ImportantEvent('First Tomb Raider game release', '1996-10-25 00:00:00'),
+    ];
 
-    const ms = moment(christmas, 'YYYY-MM-DD HH:mm:ss').diff(moment(new Date(), 'YYYY-MM-DD HH:mm:ss'));
+    const event = events[this.randomIntFromInterval(0, events.length - 1)];
+
+    const eventDate = moment(event.time, 'YYYY-MM-DD HH:mm:ss');
+    const currentDate = moment(new Date(), 'YYYY-MM-DD HH:mm:ss');
+
+    const ms = moment(event.time, 'YYYY-MM-DD HH:mm:ss').diff(moment(new Date(), 'YYYY-MM-DD HH:mm:ss'));
     const duration = moment.duration(ms);
-    this.uselessTime = _.join([
-      Math.floor(duration.asHours()), 'hours and',
-      moment.utc(ms).format('mm'), 'minutes',
-      'until christmas eve!'
-    ], ' ');
+    const message = [Math.abs(Math.floor(duration.asHours())), 'hours and'];
 
+    if (currentDate < eventDate) {
+      message.push(moment.utc(ms).format('mm'), 'minutes');
+      message.push('until');
+    } else {
+      message.push(60 - +moment.utc(ms).format('mm'), 'minutes');
+      message.push('from');
+    }
+
+    message.push(event.name + '!');
+
+    this.uselessTime = _.join(message, ' ');
   }
-
 }
