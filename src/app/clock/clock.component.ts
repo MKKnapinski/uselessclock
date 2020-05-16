@@ -17,7 +17,7 @@ export class ClockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUselessTime(this.randomIntFromInterval(3, 3));
+    this.getUselessTime(this.randomIntFromInterval(0, 3));
   }
 
 
@@ -81,13 +81,15 @@ export class ClockComponent implements OnInit {
 
     const ms = moment(event.time, 'YYYY-MM-DD HH:mm:ss').diff(moment(new Date(), 'YYYY-MM-DD HH:mm:ss'));
     const duration = moment.duration(ms);
-    const message = [Math.abs(Math.floor(duration.asHours())), 'hours and'];
+    const message = [Math.abs(Math.floor(duration.asHours())), 'hours'];
 
     if (currentDate < eventDate) {
       message.push(moment.utc(ms).format('mm'), 'minutes');
+      message.push(moment.utc(ms).format('ss'), 'seconds');
       message.push('until');
     } else {
       message.push(60 - +moment.utc(ms).format('mm'), 'minutes');
+      message.push(60 - +moment.utc(ms).format('ss'), 'seconds');
       message.push('from');
     }
 

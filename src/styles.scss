@@ -2,3 +2,73 @@
 
 /* Importing Bootstrap SCSS file. */
 @import '~bootstrap/scss/bootstrap';
+
+@font-face {
+  font-family: 'WhackyFont';
+  src: url('assets/font/Kbreindeergames.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Coyote';
+  src: url('assets/font/Coyote.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'MyWebFont';
+  src: url('assets/font/Kbreindeergames.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Funky';
+  src: url('assets/font/Funky.ttf') format('truetype');
+}
+
+.body {
+  background: aqua;
+  height: 100%;
+  width: 100%;
+}
+
+.page {
+  padding: 3em 1em 1em 0;
+  text-align: center;
+  min-height: 100vh;
+  background-color: #151517;
+  color: #e2e2e2
+}
+
+.its {
+  padding-top: .5em;
+  font-size: 3em;
+  text-align: center;
+  font-family: 'Coyote', Fallback, SansSerif;
+}
+
+.uselessTime {
+  font-family: 'Coyote', Fallback, SansSerif;
+  padding-bottom: 1em;
+}
+
+.name {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-family: 'Funky', Fallback, SansSerif;
+  font-size: 3em;
+
+  transform: rotate(-15deg);
+  -webkit-transform: rotate(-15deg);
+  -moz-transform: rotate(-15deg);
+  -ms-transform: rotate(-15deg);
+  -o-transform: rotate(-15deg);
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+}
+
+.laurel {
+  padding-top: 1em;
+}
+
+.laurel img {
+  max-width: 40vw;
+}
+
+
