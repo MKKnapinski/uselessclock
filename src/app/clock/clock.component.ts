@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import {ImportantEvent} from '../common/important-event';
+import {getSunrise, getSunset} from 'sunrise-sunset-js';
 
 @Component({
   selector: 'app-clock',
@@ -16,23 +17,23 @@ export class ClockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUselessTime(this.randomIntFromInterval(4, 4));
+    this.getUselessTime(this.randomIntFromInterval(3, 3));
   }
 
 
   private getUselessTime(variant: number) {
     switch (variant) {
-      case 1:
+      case 0:
         this.getUnixUselessTime();
         break;
-      case 2:
+      case 1:
         this.getRandomFutureInfo();
         break;
-      case 3:
+      case 2:
         this.getRandomPastInfo();
         break;
-      case 4:
-        this.getTimeFromEvent();
+      case 3:
+        this.getTimeToEvent();
         break;
     }
   }
@@ -59,14 +60,21 @@ export class ClockComponent implements OnInit {
     this.uselessTime = _.join([intoThePast, 'minutes ago was', pastTime], ' ');
   }
 
-  getTimeFromEvent() {
+  getTimeToEvent(specificEvent?: ImportantEvent) {
     const events = [
       new ImportantEvent('Christmas Eve', new Date().getFullYear() + '-12-24 00:00:00'),
       new ImportantEvent('Polish independence day', new Date().getFullYear() + '-11-11 00:00:00'),
       new ImportantEvent('First Tomb Raider game release', '1996-10-25 00:00:00'),
+      new ImportantEvent('International dish soap day', new Date().getFullYear() + '-05-20 00:00:00'),
+      new ImportantEvent('Sunrise', moment(getSunrise(53.42, 14.55))),
+      new ImportantEvent('Sunset', moment(getSunset(53.42, 14.55))),
     ];
 
-    const event = events[this.randomIntFromInterval(0, events.length - 1)];
+    let event = events[this.randomIntFromInterval(0, events.length - 1)];
+
+    if (specificEvent) {
+      event = specificEvent;
+    }
 
     const eventDate = moment(event.time, 'YYYY-MM-DD HH:mm:ss');
     const currentDate = moment(new Date(), 'YYYY-MM-DD HH:mm:ss');
