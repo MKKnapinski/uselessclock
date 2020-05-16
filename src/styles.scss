@@ -71,4 +71,9 @@
   max-width: 40vw;
 }
 
+@media(min-width: 800px) {
+  .laurel img {
+    max-width: 4em;
+  }
+}
 

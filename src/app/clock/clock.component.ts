@@ -17,7 +17,7 @@ export class ClockComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getUselessTime(this.randomIntFromInterval(0, 3));
+    this.getUselessTime(this.randomIntFromInterval(0, 8));
   }
 
 
@@ -35,6 +35,21 @@ export class ClockComponent implements OnInit {
       case 3:
         this.getTimeToEvent();
         break;
+      case 4:
+        this.getTimeToEvent();
+        break;
+      case 5:
+        this.getTimeToEvent();
+        break;
+      case 6:
+        this.getDay();
+        break;
+      case 7:
+        this.getDay();
+        break;
+      case 8:
+        this.getDay();
+        break;
     }
   }
 
@@ -49,7 +64,7 @@ export class ClockComponent implements OnInit {
     const futureTime = moment(new Date(), 'hh:mm:ss A')
       .add(intoTheFuture, 'minutes')
       .format('hh:mm:ss A');
-    this.uselessTime = _.join([intoTheFuture, 'minutes untill', futureTime], ' ');
+    this.uselessTime = _.join([intoTheFuture, 'minutes until', futureTime], ' ');
   }
 
   private getRandomPastInfo() {
@@ -65,7 +80,9 @@ export class ClockComponent implements OnInit {
       new ImportantEvent('Christmas Eve', new Date().getFullYear() + '-12-24 00:00:00'),
       new ImportantEvent('Polish independence day', new Date().getFullYear() + '-11-11 00:00:00'),
       new ImportantEvent('First Tomb Raider game release', '1996-10-25 00:00:00'),
+      new ImportantEvent('First Tomb Raider game release', '1996-10-25 00:00:00'),
       new ImportantEvent('International dish soap day', new Date().getFullYear() + '-05-20 00:00:00'),
+      new ImportantEvent('International dish soap day', new Date().getFullYear() + '-06-23 00:00:00'),
       new ImportantEvent('Sunrise', moment(getSunrise(53.42, 14.55))),
       new ImportantEvent('Sunset', moment(getSunset(53.42, 14.55))),
     ];
@@ -96,5 +113,11 @@ export class ClockComponent implements OnInit {
     message.push(event.name + '!');
 
     this.uselessTime = _.join(message, ' ');
+  }
+
+  getDay() {
+    const currentDate = moment(new Date());
+    const day = currentDate.format('dddd');
+    this.uselessTime = _.join([day, 'my dudes', currentDate.format('hh:mm:ss A'), 'AAAAAAAAAAAAAAAAA'], ' ');
   }
 }
