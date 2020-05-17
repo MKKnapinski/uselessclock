@@ -16,7 +16,14 @@
   <div class="container uselessTime">
     <div class="row">
       <div class="col-12">
-        <router-outlet></router-outlet>
+        <app-clock #clockComponent></app-clock>
+      </div>
+    </div>
+  </div>
+  <div class="container reload" (click)="nextUselessTime();">
+    <div class="row">
+      <div class="col-12 reload-icon" id="reload-icon">
+        <fa-icon [icon]="faRedoAlt"></fa-icon>
       </div>
     </div>
   </div>

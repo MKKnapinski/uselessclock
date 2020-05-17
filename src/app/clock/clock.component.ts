@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import * as moment from 'moment';
 import * as _ from 'lodash';
-import {ImportantEvent} from '../common/important-event';
+import {ImportantEvent} from '../common/model/important-event';
 import {getSunrise, getSunset} from 'sunrise-sunset-js';
+import {Subscription, timer} from 'rxjs';
 
 @Component({
   selector: 'app-clock',
@@ -10,19 +11,29 @@ import {getSunrise, getSunset} from 'sunrise-sunset-js';
   styleUrls: ['./clock.component.scss']
 })
 export class ClockComponent implements OnInit {
+  readonly VARIANTS = 7;
   uselessTime: string;
-  randomIntFromInterval = (min, max): number => Math.floor(Math.random() * (max - min + 1) + min);
-
+  uselessTimeVariant: number;
+  timerSub: Subscription;
   constructor() {
   }
 
   ngOnInit(): void {
-    this.getUselessTime(this.randomIntFromInterval(0, 8));
+    this.uselessTimeVariant = this.randomIntFromInterval(0, this.VARIANTS);
+    this.getUselessTime();
   }
 
+  randomIntFromInterval = (min, max): number => Math.floor(Math.random() * (max - min + 1) + min);
 
-  private getUselessTime(variant: number) {
-    switch (variant) {
+  public nextUselessTime() {
+    this.timerSub?.unsubscribe();
+    this.uselessTimeVariant = (this.uselessTimeVariant + 1) % (this.VARIANTS + 1);
+    console.log(this.uselessTimeVariant);
+    this.getUselessTime();
+  }
+
+  private getUselessTime() {
+    switch (this.uselessTimeVariant) {
       case 0:
         this.getUnixUselessTime();
         break;
@@ -36,27 +47,26 @@ export class ClockComponent implements OnInit {
         this.getTimeToEvent();
         break;
       case 4:
-        this.getTimeToEvent();
+        this.getDay();
         break;
       case 5:
         this.getTimeToEvent();
         break;
       case 6:
-        this.getDay();
+        this.getRandomFutureInfo();
         break;
       case 7:
-        this.getDay();
-        break;
-      case 8:
-        this.getDay();
+        this.getTimeToEvent();
         break;
     }
   }
 
   private getUnixUselessTime() {
-    setInterval(() => {
+    const source = timer(1000, 1000);
+    this.uselessTime = Math.floor(new Date().getTime() / 1000) + ' seconds after 01.01.1970';
+    this.timerSub = source.subscribe(val => {
       this.uselessTime = Math.floor(new Date().getTime() / 1000) + ' seconds after 01.01.1970';
-    }, 1000);
+    });
   }
 
   private getRandomFutureInfo() {
@@ -79,10 +89,8 @@ export class ClockComponent implements OnInit {
     const events = [
       new ImportantEvent('Christmas Eve', new Date().getFullYear() + '-12-24 00:00:00'),
       new ImportantEvent('Polish independence day', new Date().getFullYear() + '-11-11 00:00:00'),
-      new ImportantEvent('First Tomb Raider game release', '1996-10-25 00:00:00'),
-      new ImportantEvent('First Tomb Raider game release', '1996-10-25 00:00:00'),
+      new ImportantEvent('First Tomb Raider game was released', '1996-10-25 00:00:00'),
       new ImportantEvent('International dish soap day', new Date().getFullYear() + '-05-20 00:00:00'),
-      new ImportantEvent('International dish soap day', new Date().getFullYear() + '-06-23 00:00:00'),
       new ImportantEvent('Sunrise', moment(getSunrise(53.42, 14.55))),
       new ImportantEvent('Sunset', moment(getSunset(53.42, 14.55))),
     ];
@@ -105,9 +113,9 @@ export class ClockComponent implements OnInit {
       message.push(moment.utc(ms).format('ss'), 'seconds');
       message.push('until');
     } else {
-      message.push(60 - +moment.utc(ms).format('mm'), 'minutes');
-      message.push(60 - +moment.utc(ms).format('ss'), 'seconds');
-      message.push('from');
+      message.push(59 - +moment.utc(ms).format('mm'), 'minutes');
+      message.push(59 - +moment.utc(ms).format('ss'), 'seconds');
+      message.push('after');
     }
 
     message.push(event.name + '!');

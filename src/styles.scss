@@ -47,6 +47,7 @@
 .uselessTime {
   font-family: 'Coyote', Fallback, SansSerif;
   padding-bottom: 1em;
+  min-height: 15vh;
 }
 
 .name {
@@ -77,3 +78,23 @@
   }
 }
 
+.reload {
+  padding-top: 1em;
+  font-size: 2em;
+}
+
+.reload-icon.spin {
+  animation-name: spin;
+  animation-duration: 300ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes spin {
+  from {
+    transform:rotate(0deg);
+  }
+  to {
+    transform:rotate(360deg);
+  }
+}
