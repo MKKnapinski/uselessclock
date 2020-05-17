@@ -28,7 +28,6 @@ export class ClockComponent implements OnInit {
   public nextUselessTime() {
     this.timerSub?.unsubscribe();
     this.uselessTimeVariant = (this.uselessTimeVariant + 1) % (this.VARIANTS + 1);
-    console.log(this.uselessTimeVariant);
     this.getUselessTime();
   }
 
