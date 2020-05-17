@@ -51,7 +51,7 @@
 }
 
 .name {
-  padding-top: 1em;
+  padding-top: 0;
   padding-bottom: 1em;
   font-family: 'Funky', Fallback, SansSerif;
   font-size: 3em;
@@ -73,6 +73,10 @@
 }
 
 @media(min-width: 800px) {
+  .name {
+    padding-top: 1em;
+  }
+
   .laurel img {
     max-width: 4em;
   }
