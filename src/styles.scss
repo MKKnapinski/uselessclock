@@ -65,26 +65,18 @@
 }
 
 .laurel {
-  padding-top: 1em;
+  padding-top: .5em;
+  width: 100%
 }
 
 .laurel img {
-  max-width: 40vw;
-}
-
-@media(min-width: 800px) {
-  .name {
-    padding-top: 1em;
-  }
-
-  .laurel img {
-    max-width: 4em;
-  }
+  max-width: 100%;
 }
 
 .reload {
   padding-top: 1em;
   font-size: 2em;
+  cursor: pointer;
 }
 
 .reload-icon.spin {
@@ -100,5 +92,19 @@
   }
   to {
     transform:rotate(360deg);
+  }
+}
+
+@media(min-width: 768px) {
+  .page {
+    font-size: 2em;
+  }
+
+  .laurel img {
+    max-width: 75%;
+  }
+
+  .reload {
+    padding-top: 0em;
   }
 }
