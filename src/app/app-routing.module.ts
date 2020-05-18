@@ -3,10 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import {ClockComponent} from './clock/clock.component';
 
 
-const routes: Routes = [
-  {path: '', component: ClockComponent},
-  {path: '**', redirectTo: '', pathMatch: 'full'}
-];
+const routes: Routes = [];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
