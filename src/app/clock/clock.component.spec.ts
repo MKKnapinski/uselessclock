@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { ClockComponent } from './clock.component';
+import {ClockComponent} from './clock.component';
 
 describe('ClockComponent', () => {
   let component: ClockComponent;
@@ -8,9 +8,9 @@ describe('ClockComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ClockComponent ]
+      declarations: [ClockComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -21,5 +21,10 @@ describe('ClockComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should return random number from range 0-7', () => {
+    expect(component.randomIntFromInterval(0, 7)).toBeGreaterThanOrEqual(0);
+    expect(component.randomIntFromInterval(0, 7)).toBeLessThanOrEqual(7);
   });
 });
